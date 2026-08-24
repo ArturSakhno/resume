@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artur Sakhno — Senior iOS Engineer</title>
+<meta name="description" content="Artur Sakhno, Senior iOS Engineer — SwiftUI, Design Systems, scalable mobile architecture.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:            #0A0C0F;
+    --surface:       #14171C;
+    --surface-2:     #191D23;
+    --line:          #262B33;
+    --text:          #F2F3F5;
+    --text-dim:      #9BA1AB;
+    --text-faint:    #676E79;
+    --accent:        #FA7343;   /* Swift orange */
+    --accent-dim:    #8A4A2C;
+    --blue:          #4C8DFF;
+    --green:         #30D889;
+
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body:    'Inter', sans-serif;
+    --font-mono:    'JetBrains Mono', monospace;
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+    --space-9: 96px;
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 14px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(250,115,67,0.07), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(76,141,255,0.05), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:var(--blue); text-decoration:none; }
+  a:hover{ text-decoration:underline; }
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+    padding:var(--space-8) var(--space-5) var(--space-9);
+  }
+
+  /* ---------- Header ---------- */
+  header.hero{
+    margin-bottom:var(--space-7);
+  }
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 var(--space-3);
+    display:flex;
+    align-items:center;
+    gap:var(--space-2);
+  }
+  .eyebrow::before{
+    content:"";
+    width:6px; height:6px;
+    background:var(--accent);
+    border-radius:50%;
+    box-shadow:0 0 0 3px rgba(250,115,67,0.18);
+  }
+  h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(2.1rem, 5vw, 3.1rem);
+    letter-spacing:-0.02em;
+    margin:0 0 var(--space-2);
+  }
+  .role-line{
+    font-family:var(--font-mono);
+    font-size:14px;
+    color:var(--text-dim);
+    margin:0 0 var(--space-5);
+  }
+  .role-line .sep{ color:var(--text-faint); margin:0 var(--space-2); }
+
+  .contact-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:var(--space-2) var(--space-5);
+    font-family:var(--font-mono);
+    font-size:13px;
+    color:var(--text-dim);
+    margin-bottom:var(--space-6);
+  }
+  .contact-row a{ color:var(--text-dim); }
+  .contact-row a:hover{ color:var(--accent); text-decoration:none; }
+  .contact-row span.k{ color:var(--text-faint); }
+
+  /* ---------- Token strip (signature element) ---------- */
+  .token-strip{
+    display:flex;
+    align-items:stretch;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:var(--radius-md);
+    overflow:hidden;
+  }
+  .token{
+    flex:1;
+    min-width:0;
+    background:var(--surface);
+    padding:var(--space-3) var(--space-3);
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .token .swatch{
+    width:100%;
+    height:14px;
+    border-radius:3px;
+  }
+  .token .label{
+    font-family:var(--font-mono);
+    font-size:10.5px;
+    color:var(--text-faint);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  .token .val{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--text-dim);
+  }
+  .sw-accent{ background:var(--accent); }
+  .sw-blue{ background:var(--blue); }
+  .sw-green{ background:var(--green); }
+  .sw-text{ background:var(--text); }
+  .sw-line{ background:var(--line); }
+
+  /* ---------- Section shell ---------- */
+  section{ margin-top:var(--space-8); }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:var(--space-3);
+    margin-bottom:var(--space-5);
+  }
+  .section-head h2{
+    font-family:var(--font-display);
+    font-weight:600;
+    font-size:1.3rem;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  .section-head .tag{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--text-faint);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:2px 6px;
+  }
+  .section-head::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  p.lede{
+    color:var(--text-dim);
+    font-size:15.5px;
+    max-width:64ch;
+  }
+
+  /* ---------- Highlights ---------- */
+  .highlight-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+  }
+  .highlight{
+    background:var(--surface);
+    padding:var(--space-5);
+  }
+  .highlight .num{
+    font-family:var(--font-mono);
+    font-size:1.6rem;
+    font-weight:500;
+    color:var(--accent);
+    display:block;
+    margin-bottom:var(--space-1);
+  }
+  .highlight .num.blue{ color:var(--blue); }
+  .highlight .num.green{ color:var(--green); }
+  .highlight .desc{
+    font-size:13.5px;
+    color:var(--text-dim);
+    line-height:1.5;
+  }
+
+  /* ---------- Skills ---------- */
+  .skill-group{ margin-bottom:var(--space-4); }
+  .skill-group h3{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin:0 0 var(--space-3);
+    font-weight:400;
+  }
+  .chip-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:var(--space-2);
+  }
+  .chip{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--text);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:5px 10px;
+  }
+
+  /* ---------- Experience ---------- */
+  .job{
+    padding-bottom:var(--space-6);
+    border-bottom:1px solid var(--line);
+    margin-bottom:var(--space-6);
+  }
+  .job:last-child{ border-bottom:none; margin-bottom:0; padding-bottom:0; }
+  .job-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:var(--space-2) var(--space-4);
+    margin-bottom:var(--space-1);
+  }
+  .job-head h3{
+    font-family:var(--font-display);
+    font-size:1.08rem;
+    font-weight:600;
+    margin:0;
+  }
+  .job-head time{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--text-faint);
+    white-space:nowrap;
+  }
+  .job-project{
+    font-size:13.5px;
+    color:var(--accent);
+    margin:0 0 var(--space-3);
+  }
+  .job ul{
+    margin:0;
+    padding-left:1.1em;
+    color:var(--text-dim);
+    font-size:14.5px;
+  }
+  .job li{ margin-bottom:var(--space-2); }
+  .job li:last-child{ margin-bottom:0; }
+  .job li strong{ color:var(--text); font-weight:600; }
+
+  /* ---------- Education ---------- */
+  .edu-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:var(--space-2) var(--space-4);
+  }
+  .edu-row h3{
+    font-family:var(--font-display);
+    font-size:1.05rem;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .edu-row .field{
+    font-size:13.5px;
+    color:var(--text-dim);
+  }
+  .edu-row time{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--text-faint);
+    white-space:nowrap;
+  }
+
+  footer{
+    margin-top:var(--space-9);
+    padding-top:var(--space-5);
+    border-top:1px solid var(--line);
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:var(--text-faint);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:var(--space-2);
+  }
+
+  @media (max-width:640px){
+    .highlight-grid{ grid-template-columns:1fr; }
+    .token-strip{ flex-wrap:wrap; }
+    .token{ flex:1 1 45%; }
+    .job-head{ flex-direction:column; align-items:flex-start; }
+    .edu-row{ flex-direction:column; align-items:flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+  }
+
+  @media print{
+    body{ background:#fff; color:#111; }
+    .token-strip, .highlight .num, .job-project{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+    a{ color:#111; text-decoration:none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <p class="eyebrow">Available for new roles</p>
+    <h1>Artur Sakhno</h1>
+    <p class="role-line">Senior iOS Engineer<span class="sep">/</span>SwiftUI &amp; Design Systems<span class="sep">/</span>Kraków, PL</p>
+
+    <div class="contact-row">
+      <span><span class="k">tel </span><a href="tel:+48572916519">+48 572 916 519</a></span>
+      <span><span class="k">mail </span><a href="mailto:artur_sakhno@icloud.com">artur_sakhno@icloud.com</a></span>
+      <span><span class="k">web </span><a href="#" aria-label="LinkedIn — add your profile URL">LinkedIn ↗</a></span>
+    </div>
+  </header>
+
+  <section id="summary">
+    <div class="section-head"><h2>Summary</h2><span class="tag">01</span></div>
+    <p class="lede">Senior iOS Engineer with 7+ years of experience building large-scale consumer apps used by 250M+ users. Specialized in SwiftUI, Design Systems, and scalable mobile architecture, with a track record of improving developer productivity, app stability, and delivery speed while leading cross-team initiatives and mentoring engineers.</p>
+  </section>
+
+  <section id="highlights">
+    <div class="section-head"><h2>Highlights</h2><span class="tag">02</span></div>
+    <div class="highlight-grid">
+      <div class="highlight">
+        <span class="num">250M+</span>
+        <span class="desc">active users engineered for, with a consistent 4.9★ App Store rating</span>
+      </div>
+      <div class="highlight">
+        <span class="num blue">7+</span>
+        <span class="desc">internal teams standardized on a centralized SwiftUI Design System</span>
+      </div>
+      <div class="highlight">
+        <span class="num">SDUI</span>
+        <span class="desc">Server-Driven UI via runtime token injection — branding updates with no App Store release</span>
+      </div>
+      <div class="highlight">
+        <span class="num green">99.9%</span>
+        <span class="desc">crash-free sessions, alongside 85%+ ViewModel unit test coverage</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="section-head"><h2>Skills</h2><span class="tag">03</span></div>
+
+    <div class="skill-group">
+      <h3>Languages &amp; Frameworks</h3>
+      <div class="chip-row">
+        <span class="chip">Swift</span><span class="chip">SwiftUI</span><span class="chip">UIKit</span>
+        <span class="chip">Objective-C</span><span class="chip">Combine</span><span class="chip">Async/Await</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h3>Architecture</h3>
+      <div class="chip-row">
+        <span class="chip">MVVM</span><span class="chip">VIPER</span>
+        <span class="chip">Swift Package Manager</span><span class="chip">Clean Architecture</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h3>Testing &amp; Quality</h3>
+      <div class="chip-row">
+        <span class="chip">Swift Testing</span><span class="chip">XCTest</span><span class="chip">UI Testing</span>
+        <span class="chip">DocC</span><span class="chip">Accessibility / VoiceOver</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h3>CI/CD</h3>
+      <div class="chip-row">
+        <span class="chip">Xcode Cloud</span><span class="chip">Bitrise</span><span class="chip">GitHub Actions</span>
+        <span class="chip">Fastlane</span><span class="chip">App Store Connect</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h3>Data &amp; APIs</h3>
+      <div class="chip-row">
+        <span class="chip">Core Data</span><span class="chip">Core Bluetooth</span>
+        <span class="chip">REST</span><span class="chip">JSON</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-head"><h2>Experience</h2><span class="tag">04</span></div>
+
+    <div class="job">
+      <div class="job-head">
+        <h3>Capgemini</h3>
+        <time>09.2022 — Present</time>
+      </div>
+      <p class="job-project">Global Fortune 500 QSR (Quick Service Restaurant) Application</p>
+      <ul>
+        <li><strong>Design System &amp; developer experience:</strong> architected a SwiftUI Design System Library distributed via SPM, serving as the source of truth for 7+ product teams. Standardized 100+ UI components and design tokens, reducing UI development time and ensuring 100% visual consistency across markets.</li>
+        <li><strong>Documentation:</strong> documented the entire library with DocC, drastically reducing onboarding time for new developers.</li>
+        <li><strong>Server-Driven UI:</strong> engineered a runtime token injection system to dynamically update app branding — colors and typography — via JSON, enabling instant global campaign updates without app releases.</li>
+        <li><strong>Quality &amp; accessibility:</strong> enforced WCAG 2.1 compliance by embedding accessibility IDs and VoiceOver support into core components. Increased ViewModel unit test coverage to 85%+, significantly reducing regression bugs.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <div class="job-head">
+        <h3>EPAM Systems</h3>
+        <time>08.2018 — 09.2022</time>
+      </div>
+      <p class="job-project">Top 5 US Retailer · Major European Streaming Platform · Gen-AI News Aggregator</p>
+      <ul>
+        <li><strong>E-commerce flagship app (Top 5 US Retailer):</strong> delivered the revenue-critical Curbside Pickup feature using geolocation and complex state management, supporting a user base generating 2M+ reviews while maintaining a 4.9★ rating through rigorous stability fixes.</li>
+        <li><strong>Gen-AI news platform:</strong> built the iOS presentation layer for a generative AI news aggregator, integrating backend APIs to display streamed content with low latency.</li>
+        <li><strong>Video streaming app (major European broadcaster):</strong> ensured stability for a high-traffic VOD platform, optimizing ad-tech SDK integrations to directly support the monetization strategy.</li>
+        <li><strong>Leadership:</strong> led a squad of 5 junior engineers on a full-lifecycle food delivery project — designed the MVVM architecture and established code review standards, transitioning the team to independent operation.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="section-head"><h2>Education</h2><span class="tag">05</span></div>
+    <div class="edu-row">
+      <div>
+        <h3>Kharkiv National University of Radio Electronics</h3>
+        <p class="field">Computer Science — Software Engineering</p>
+      </div>
+      <time>2015 — 2018</time>
+    </div>
+  </section>
+
+  <footer>
+    <span>Artur Sakhno — Senior iOS Engineer</span>
+    <span>Kraków, PL</span>
+  </footer>
+
+</div>
+</body>
+</html>
